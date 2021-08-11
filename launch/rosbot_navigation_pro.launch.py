@@ -1,4 +1,5 @@
 import os
+import math
 
 from launch import LaunchDescription
 import launch.actions
@@ -111,5 +112,13 @@ def generate_launch_description():
             parameters=[{'use_sim_time': use_sim_time},
                         {'autostart': autostart},
                         {'node_names': lifecycle_nodes}]),
+
+        launch_ros.actions.Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            output='log',
+            arguments=['0.0', '0.0', '0.058', str(-math.pi), '0.0', '0.0', 'base_link', 'laser'],
+            parameters=[{'use_sim_time': False}]
+    )
 
     ])
